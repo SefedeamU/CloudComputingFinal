@@ -5,24 +5,36 @@
     {{ usandoBusqueda ? 'Resultados de búsqueda' : 'Productos de la categoría' }}
   </h1>
 
-  <!-- Mostrar mensaje si no hay resultados de búsqueda -->
-  <div *ngIf="usandoBusqueda && productos$().length === 0" class="text-center text-2xl text-red-400 font-bold py-20">
-    ❌ No hay coincidencias para "{{ searchQuery }}"
+  <!-- Loading spinner -->
+  <div *ngIf="loading()" class="flex justify-center items-center py-32">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-cyan-400 border-opacity-70"></div>
   </div>
 
-  <!-- Mostrar productos si hay -->
-  <div
-    *ngIf="productos$().length > 0"
-    class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto"
-  >
-    <app-product
-      *ngFor="let prod of productos$()"
-      [producto]="prod"
-    ></app-product>
-  </div>
+  <!-- Contenido cuando ya no estamos cargando -->
+  <ng-container *ngIf="!loading() && productos$() as productos">
+    <!-- Sin resultados -->
+    <div *ngIf="usandoBusqueda && productos.length === 0" class="text-center text-2xl text-red-400 font-bold py-20">
+      ❌ No hay coincidencias para "{{ searchQuery }}"
+    </div>
 
-  <!-- Botón cargar más solo si hay más productos y no estamos buscando -->
-  <div class="text-center mt-10" *ngIf="hasMore()">
+    <div *ngIf="!usandoBusqueda && productos.length === 0" class="text-center text-white/70 font-semibold py-20">
+      💤 No hay productos disponibles en esta categoría.
+    </div>
+
+    <!-- Mostrar productos -->
+    <div
+      *ngIf="productos.length > 0"
+      class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto"
+    >
+      <app-product
+        *ngFor="let prod of productos"
+        [producto]="prod"
+      ></app-product>
+    </div>
+  </ng-container>
+
+  <!-- Botón cargar más -->
+  <div class="text-center mt-10" *ngIf="hasMore() && !loading()">
     <button
       (click)="loadMore()"
       class="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg shadow-lg transition"

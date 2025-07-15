@@ -28,19 +28,25 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  reset(categoriaId: string) {
-    this.categoriaId = categoriaId;
-    this.productosSubject.next([]);
-    this.nextToken = null;
-    this.fetchNextPage();
-  }
+reset(categoriaId: string) {
+  console.log('🔄 reset() llamado con id_categoria:', categoriaId); // 💡
+
+  this.categoriaId = categoriaId;
+  this.productosSubject.next([]);
+  this.nextToken = null;
+  this.fetchNextPage();
+}
+
 
   fetchNextPage(): void {
     // Si ya no hay token, no hacemos nada para evitar llamadas innecesarias.
-    if (this.nextToken === null && this.productosSubject.value.length > 0) {
-      return;
-    }
+  console.log('➡️ fetchNextPage llamado. Token actual:', this.nextToken);
+  console.log('➡️ Categoría actual:', this.categoriaId);
 
+  if (this.nextToken === null && this.productosSubject.value.length > 0) {
+    console.log('⏭️ No hay más productos por cargar.');
+    return;
+  }
     let params = new HttpParams()
       .set('tenant_id', 'AuroraJewels')
       .set('id_categoria', this.categoriaId)
