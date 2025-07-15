@@ -1,17 +1,32 @@
 <app-header></app-header>
 
 <main class="min-h-screen bg-gradient-to-b from-black to-slate-900 text-white px-4 py-8">
-  <h1 class="text-3xl font-extrabold mb-8 text-center text-cyan-300">Productos de la categoría</h1>
+  <h1 class="text-3xl font-extrabold mb-8 text-center text-cyan-300">
+    {{ usandoBusqueda ? 'Resultados de búsqueda' : 'Productos de la categoría' }}
+  </h1>
 
-  <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto">
+  <!-- Mostrar mensaje si no hay resultados de búsqueda -->
+  <div *ngIf="usandoBusqueda && productos$().length === 0" class="text-center text-2xl text-red-400 font-bold py-20">
+    ❌ No hay coincidencias para "{{ searchQuery }}"
+  </div>
+
+  <!-- Mostrar productos si hay -->
+  <div
+    *ngIf="productos$().length > 0"
+    class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto"
+  >
     <app-product
-      *ngFor="let prod of productService.productos$ | async"
+      *ngFor="let prod of productos$()"
       [producto]="prod"
     ></app-product>
   </div>
 
+  <!-- Botón cargar más solo si hay más productos y no estamos buscando -->
   <div class="text-center mt-10" *ngIf="hasMore()">
-    <button (click)="loadMore()" class="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg shadow-lg transition">
+    <button
+      (click)="loadMore()"
+      class="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg shadow-lg transition"
+    >
       Cargar más
     </button>
   </div>

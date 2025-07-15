@@ -87,4 +87,9 @@ export class ProductService {
   hasMore(): boolean {
     return this.nextToken !== null;
   }
+
+  getProductosSnapshot(): Producto[] {
+    return this.productosSubject.getValue();
+  }
+
 }
