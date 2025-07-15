@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<main class="starry-bg min-h-screen text-white px-6 py-10 relative overflow-hidden">
+  <!-- Fondo de estrellas animado -->
+  <div class="stars"></div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    <h1 class="text-3xl font-extrabold text-center mb-12 text-cyan-300 drop-shadow-lg">
+      Explora el Universo de Categorías
+    </h1>
+
+    <div class="relative flex flex-wrap justify-center gap-10">
+      <div
+        *ngFor="let category of categories; let i = index"
+        class="w-64 h-40 rounded-xl overflow-hidden shadow-lg transform transition duration-500 ease-out hover:scale-110 hover:-translate-y-2 hover:rotate-1 hover:shadow-cyan-500/50 hover:shadow-2xl relative group cursor-pointer"
+        [ngClass]="[offsets[i], animations[i]]"
+        (click)="onCategoryClick(category)"
+      >
+        <!-- Destello radial -->
+        <div class="absolute inset-0 bg-cyan-400 opacity-10 blur-2xl scale-150 rounded-full group-hover:opacity-20 transition-all duration-500 pointer-events-none"></div>
+
+        <!-- Contenido -->
+        <div class="relative w-full h-full">
+          <img
+            [src]="category.image"
+            [alt]="category.nombre"
+            class="w-full h-full object-cover brightness-90 group-hover:brightness-100 transition duration-300"
+          />
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <h2 class="text-xl font-bold text-cyan-200 tracking-wide text-center drop-shadow-md group-hover:text-white transition">
+              {{ category.nombre }}
+            </h2>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>

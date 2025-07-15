@@ -1,0 +1,77 @@
+<!-- cart.component.html -->
+<button (click)="togglePanel()" class="relative">
+  🛒
+  <span
+    class="absolute -top-1 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"
+    *ngIf="cartService.cartItems().length > 0"
+  >
+    {{ cartService.cartItems().length }}
+  </span>
+</button>
+
+<!-- Panel deslizable -->
+<div
+  class="fixed top-0 right-0 w-96 h-screen bg-white shadow-xl transform transition-transform duration-300 z-50 flex flex-col"
+  [class.translate-x-full]="!showPanel()"
+>
+  <!-- Header -->
+  <div class="p-4 border-b flex justify-between items-center bg-cyan-600 text-white">
+    <h2 class="text-lg font-bold">Carrito</h2>
+    <button (click)="togglePanel()">✖</button>
+  </div>
+
+  <!-- Lista de productos (crece según necesidad con scroll si es muy larga) -->
+  <div class="flex-1 overflow-y-auto bg-white p-4 space-y-4">
+    <div
+      *ngFor="let item of cartService.cartItems()"
+      class="flex gap-4 items-center border-b pb-4"
+    >
+      <img
+        [src]="item.producto.imagen_url[0]"
+        class="w-16 h-16 object-cover rounded"
+      />
+      <div class="flex-1">
+        <h3 class="font-semibold">{{ item.producto.nombre }}</h3>
+        <p class="text-sm text-gray-600">
+          ${{ item.producto.precio }} x {{ item.cantidad }}
+        </p>
+        <div class="flex items-center gap-2 mt-1">
+          <button
+            class="bg-gray-200 px-2"
+            (click)="cartService.decreaseQuantity(item.producto.id_producto)"
+          >
+            −
+          </button>
+          <span>{{ item.cantidad }}</span>
+          <button
+            class="bg-gray-200 px-2"
+            (click)="cartService.increaseQuantity(item.producto.id_producto)"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <button
+        class="text-red-500 text-xl"
+        (click)="cartService.removeFromCart(item.producto.id_producto)"
+      >
+        🗑
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="p-4 border-t bg-gray-100 sticky bottom-0">
+    <div class="flex justify-between font-bold text-lg mb-3">
+      <span>Total:</span>
+      <span>${{ cartService.total().toFixed(2) }}</span>
+    </div>
+    <button
+      class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded shadow-md"
+      (click)="pagar()"
+    >
+      Pagar
+    </button>
+  </div>
+</div>
+

@@ -1,0 +1,19 @@
+<!-- product.component.html -->
+<div class="bg-white text-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+  <img [src]="producto.imagen_url[0]" [alt]="producto.nombre" class="w-full h-48 object-cover">
+  <div class="p-4">
+    <h3 class="text-lg font-bold">{{ producto.nombre }}</h3>
+    <p class="text-sm text-gray-600">{{ producto.proveedor }}</p>
+    <p class="text-sm text-gray-600">{{ producto.direccion }}</p>
+    <div class="mt-2 flex justify-between items-center">
+      <span class="text-cyan-600 font-semibold text-lg">${{ producto.precio }}</span>
+      <span class="text-xs text-gray-500">Stock: {{ producto.stock }}</span>
+    </div>
+    <button
+      (click)="addToCart()"
+      class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded transition"
+    >
+      Agregar al carrito
+    </button>
+  </div>
+</div>

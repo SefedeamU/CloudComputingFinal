@@ -1,0 +1,98 @@
+<div
+  *ngIf="show"
+  class="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+>
+  <div class="bg-gray-900 text-white p-6 rounded-2xl w-full max-w-sm shadow-2xl border border-cyan-700 animate-fade-in">
+    <h2 class="text-2xl font-semibold text-cyan-300 mb-6 text-center">Iniciar sesión</h2>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-cyan-200 mb-1">Correo</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        class="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      />
+    </div>
+
+    <div class="mb-6 relative">
+      <label class="block text-sm font-medium text-cyan-200 mb-1">Contraseña</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        class="w-full px-4 py-2 pr-12 rounded-md bg-gray-800 text-white border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      />
+
+      <!-- Botón mostrar/ocultar -->
+      <button
+        type="button"
+        (click)="showPassword = !showPassword"
+        class="absolute right-3 top-8 text-cyan-300 hover:text-white"
+        tabindex="-1"
+      >
+        <svg
+          *ngIf="!showPassword"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+          />
+        </svg>
+
+        <svg
+          *ngIf="showPassword"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 012.597-4.263M9.88 9.88a3 3 0 104.24 4.24M3 3l18 18"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <p *ngIf="error" class="text-red-400 text-sm mb-4 text-center">{{ error }}</p>
+
+    <div class="flex justify-end gap-3">
+      <div class="mt-6 text-center text-sm text-cyan-300">
+        ¿No tienes cuenta?
+        <button
+          (click)="goToRegister()"
+          class="text-cyan-400 hover:text-white underline transition ml-1"
+        >
+          Regístrate
+        </button>
+      </div>
+      <button
+        (click)="cancel()"
+        class="text-cyan-400 hover:text-white transition"
+      >
+        Cancelar
+      </button>
+      <button
+        (click)="login()"
+        class="px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition"
+      >
+        Entrar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<app-header></app-header>
+
+<main class="min-h-screen bg-gradient-to-b from-black to-slate-900 text-white px-4 py-8">
+  <h1 class="text-3xl font-extrabold mb-8 text-center text-cyan-300">Productos de la categoría</h1>
+
+  <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto">
+    <app-product
+      *ngFor="let prod of productService.productos$ | async"
+      [producto]="prod"
+    ></app-product>
+  </div>
+
+  <div class="text-center mt-10" *ngIf="hasMore()">
+    <button (click)="loadMore()" class="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg shadow-lg transition">
+      Cargar más
+    </button>
+  </div>
+</main>

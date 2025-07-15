@@ -1,18 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.bg-red-500 { background-color: red; }
-
 /* styles.css */
 .starry-bg {
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .stars,
